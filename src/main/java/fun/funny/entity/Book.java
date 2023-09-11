@@ -24,4 +24,58 @@ public class Book {
 
     @ManyToMany(mappedBy = "readBooks")
     private List<User> readers;
+
+    @ManyToMany(mappedBy = "followingBooks")
+    private List<User> followers;
+
+
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public Integer getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(Integer publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void addReaders(User reader){
+        readers.add(reader);
+    }
+
+    public void  removeReader(User reader){
+        readers.remove(reader);
+    }
+
+    public void addFollower(User follower){
+        followers.add(follower);
+    }
+
+    public void  removeFollower(User follower){
+        followers.remove(follower);
+    }
 }
