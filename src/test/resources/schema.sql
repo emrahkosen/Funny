@@ -4,3 +4,12 @@ CREATE TABLE IF NOT EXISTS customer (
     first_name VARCHAR(255),
     last_name VARCHAR(255)
 );
+
+
+CREATE TABLE IF NOT EXISTS Book (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    isbn VARCHAR(20),
+    publishedYear INT,
+    genre VARCHAR(100)
+);

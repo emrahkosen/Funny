@@ -6,6 +6,8 @@ import java.util.List;
 
 @Entity
 public class Book {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
@@ -30,7 +32,9 @@ public class Book {
 
 
 
-
+    public Long getBookId() {
+        return bookId;
+    }
     public String getTitle() {
         return title;
     }
