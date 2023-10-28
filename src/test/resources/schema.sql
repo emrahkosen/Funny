@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS customer (
 CREATE TABLE IF NOT EXISTS Book (
     book_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
-    isbn VARCHAR(20),
-    publishedYear INT,
+    isbn VARCHAR(20) UNIQUE,
+    published_year INT,
     genre VARCHAR(100)
 );

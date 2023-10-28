@@ -53,4 +53,25 @@ public class BookController {
 
         return ResponseEntity.ok(bookPage.getContent());
     }
+
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<Book> getByIsbn(@PathVariable String isbn){
+        Optional<Book> book = bookRepository.findBookByIsbn(isbn);
+        if(book.isPresent()){
+            return ResponseEntity.ok(book.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/year")
+    public ResponseEntity<List<Book>> getBooksByPublishedYear(
+            @RequestParam Integer publishedYear,
+            Pageable pageable) {
+        System.out.println(publishedYear);
+        Page<Book> bookPage = bookRepository.findByPublishedYear(publishedYear, pageable);
+        System.out.println(bookPage.getContent().get(0).getPublishedYear());
+        System.out.println(bookPage.getContent().get(0).getIsbn());
+        return ResponseEntity.ok(bookPage.getContent());
+    }
 }

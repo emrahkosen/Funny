@@ -15,7 +15,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.net.URI;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -65,7 +64,7 @@ public class BookControlleTest {
     }
 
     @Test
-    void shouldReturnAllCustomers(){
+    void shouldReturnAllBooks(){
         ResponseEntity<List<Book>> response = restTemplate.exchange(
                 "/book/all",
                 HttpMethod.GET,
@@ -79,5 +78,56 @@ public class BookControlleTest {
         assertThat(books.size()).isEqualTo(4);
 
     }
+
+
+    @Test
+    void shouldReturnBookWithGivenIsbn(){
+        ResponseEntity<Book> entity = restTemplate.getForEntity("/book/isbn/ISBN1", Book.class);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        Book body = entity.getBody();
+
+        assertThat(body.getTitle()).isEqualTo("Book 1");
+    }
+
+    @Test
+    void shouldNotReturnBookWithGivenIsbn(){
+        ResponseEntity<Book> entity = restTemplate.getForEntity("/book/isbn/INVALID_ISBN", Book.class);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+    }
+
+    @Test
+    void checkUniquenessOfIsbn(){
+        Book newBook = new Book();
+        newBook.setTitle("Already Exists ISBN Book");
+        newBook.setIsbn("ISBN1");
+        newBook.setPublishedYear(2024);
+
+        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/book", newBook, Void.class);
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+        newBook.setIsbn("ISNB_UNIQUE");
+
+        ResponseEntity<Void> createValidResponse = restTemplate.postForEntity("/book", newBook, Void.class);
+        assertThat(createValidResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+    }
+    @Test
+    void shouldReturnByPublishedYear(){
+        ResponseEntity<List<Book>> response = restTemplate.exchange(
+                "/book/year?publishedYear=2021&page=0&size=2",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Book>>() {}
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().size()).isEqualTo(2);
+    }
+
 
 }
