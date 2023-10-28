@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BookControlleTest {
+public class BookControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
