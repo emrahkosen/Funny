@@ -68,10 +68,19 @@ public class BookController {
     public ResponseEntity<List<Book>> getBooksByPublishedYear(
             @RequestParam Integer publishedYear,
             Pageable pageable) {
-        System.out.println(publishedYear);
         Page<Book> bookPage = bookRepository.findByPublishedYear(publishedYear, pageable);
-        System.out.println(bookPage.getContent().get(0).getPublishedYear());
-        System.out.println(bookPage.getContent().get(0).getIsbn());
+
         return ResponseEntity.ok(bookPage.getContent());
+    }
+
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<Book>> getBookByGenre(@RequestParam String genre, Pageable pageable){
+        Page<Book> booksByGenre = bookRepository.findByGenre(genre, pageable);
+        if(booksByGenre.getTotalElements() > 0){
+            return ResponseEntity.ok(booksByGenre.getContent());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }

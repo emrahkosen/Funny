@@ -16,4 +16,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findAllByPublishedYear(@Param("publishedYear") Integer publishedYear, Pageable pageable);
 
     Page<Book> findByPublishedYear(Integer publishedYear, Pageable pageable);
+    Page<Book> findByGenre(String genre, Pageable pageable);
 }

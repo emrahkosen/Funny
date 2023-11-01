@@ -129,5 +129,17 @@ public class BookControllerTest {
         assertThat(response.getBody().size()).isEqualTo(2);
     }
 
+    @Test
+    void shouldReturnByGenre(){
+        ResponseEntity<List<Book>> response = restTemplate.exchange(
+                "/book/genre?genre=Fiction&page=0&size=3",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Book>>() {
+                });
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().size()).isEqualTo(2);
+    }
 
 }
