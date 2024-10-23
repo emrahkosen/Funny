@@ -18,6 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -31,7 +32,7 @@ public class CustomerControllerTest {
         ResponseEntity<Customer> response = restTemplate.getForEntity("/customer", Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Customer customer = response.getBody();
-
+        assertNotNull(customer);
         assertThat(customer.getFirstName()).isEqualTo("emrah");
         assertThat(customer.getLastName()).isEqualTo("kosen");
     }
@@ -41,6 +42,7 @@ public class CustomerControllerTest {
         ResponseEntity<Customer> response = restTemplate.getForEntity("/customer/111", Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Customer customer = response.getBody();
+        assertNotNull(customer);
         assertThat(customer.getFirstName()).isEqualTo("John2");
 
     }
@@ -48,7 +50,6 @@ public class CustomerControllerTest {
     @Test
     public void getByIdNotFound(){
         ResponseEntity<Customer> response = restTemplate.getForEntity("/customer/1231", Customer.class);
-
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
     }
@@ -64,6 +65,7 @@ public class CustomerControllerTest {
         URI location = createResponse.getHeaders().getLocation();
         ResponseEntity<Customer> entityResponse = restTemplate.getForEntity(location, Customer.class);
         assertThat(entityResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertNotNull(entityResponse.getBody());
         assertThat(entityResponse.getBody().getId()).isNotNull();
         assertThat(entityResponse.getBody().getFirstName()).isEqualTo("emrah");
 
@@ -83,6 +85,7 @@ public class CustomerControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<Customer> body = response.getBody();
+        assertNotNull(body);
         assertThat(body.size()).isEqualTo(4);
 
     }

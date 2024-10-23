@@ -10,5 +10,4 @@ public interface CustomerRepository extends CrudRepository<Customer, Long>, Pagi
 
     List<Customer> findByLastName(String lastName);
 
-    Customer findById(long id);
 }
