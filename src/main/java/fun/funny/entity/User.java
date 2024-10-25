@@ -3,7 +3,9 @@ package fun.funny.entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_table")
@@ -19,6 +21,41 @@ public class User {
     private Date birthDate;
     private String nationality;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserBookRating> ratings;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserReadBooks",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "bookId")
+    )
+    private List<Book> readBooks;
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserFollowingBooks",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "bookId")
+    )
+    private List<Book> followingBooks;
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
@@ -76,40 +113,35 @@ public class User {
         this.nationality = nationality;
     }
 
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "UserReadBooks",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "bookId")
-    )
-    private List<Book> readBooks;
-
-    @ManyToMany
-    @JoinTable(
-            name = "UserFollowingBooks",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "bookId")
-    )
-    private List<Book> followingBooks;
-
-    @OneToMany(mappedBy = "user")
-    private List<UserBookRating> ratings;
-
-    public void addReadBook(Book book){
-        readBooks.add(book);
+    public List<UserBookRating> getRatings() {
+        return ratings;
     }
 
-    public void removeReadBook(Book book){
-        readBooks.remove(book);
+    public void setRatings(List<UserBookRating> ratings) {
+        this.ratings = ratings;
     }
 
-    public void addFollowingBooks(Book book){
-        followingBooks.add(book);
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void removeFollowingBooks(Book book){
-        followingBooks.remove(book);
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Book> getReadBooks() {
+        return readBooks;
+    }
+
+    public void setReadBooks(List<Book> readBooks) {
+        this.readBooks = readBooks;
+    }
+
+    public List<Book> getFollowingBooks() {
+        return followingBooks;
+    }
+
+    public void setFollowingBooks(List<Book> followingBooks) {
+        this.followingBooks = followingBooks;
     }
 }
