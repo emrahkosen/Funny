@@ -7,6 +7,7 @@ import fun.funny.repository.BookRepository;
 import fun.funny.repository.RoleRepository;
 import fun.funny.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -38,6 +42,7 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -53,15 +58,14 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<User> findUsersByNationality(String nationality) {
-        // Implement this method to search users by nationality.
-        return null;
+        return userRepository.findByNationality(nationality);
     }
 
     @Transactional
     public User updateUser(Long userId, User updatedUser) {
         return userRepository.findById(userId).map(existingUser -> {
             existingUser.setUsername(updatedUser.getUsername());
-            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             existingUser.setFirstName(updatedUser.getFirstName());
             existingUser.setLastName(updatedUser.getLastName());
             existingUser.setEmail(updatedUser.getEmail());

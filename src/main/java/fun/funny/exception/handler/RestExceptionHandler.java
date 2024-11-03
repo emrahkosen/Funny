@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-    @ExceptionHandler
-            (CustomerNotFoundException.class)
+    @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<Customer> handleCustomerNotFoundException(CustomerNotFoundException ex) {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

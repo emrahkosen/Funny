@@ -13,6 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
+    @Column(unique = true, nullable = false)
     private String username;
     private String password;
     private String firstName;
@@ -24,7 +25,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserBookRating> ratings;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
