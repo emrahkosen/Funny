@@ -33,9 +33,10 @@ public class Book {
 
 
 
-    public Long getBookId() {
+    public Long getId() {
         return bookId;
     }
+    public void setId(Long id) {this.bookId = id;}
     public String getTitle() {
         return title;
     }

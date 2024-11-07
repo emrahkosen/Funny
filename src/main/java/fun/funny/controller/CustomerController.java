@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("gray/customer")
 public class CustomerController {
     CustomerService customerService;
     public CustomerController(CustomerService customerService){
@@ -42,7 +42,7 @@ public class CustomerController {
     public ResponseEntity<Void> saveCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder ucb){
 
         Customer savedCustomer = customerService.save(newCustomer);
-        URI locationOfNewCustomer = ucb.path("/customer/{id}")
+        URI locationOfNewCustomer = ucb.path("/gray/customer/{id}")
                 .buildAndExpand(savedCustomer.getId())
                 .toUri();
         return ResponseEntity.created(locationOfNewCustomer).build();

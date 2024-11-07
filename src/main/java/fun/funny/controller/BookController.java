@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("gray/book")
 public class BookController {
     private BookRepository bookRepository;
 
@@ -38,8 +38,8 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Void> saveBook(@RequestBody Book newBook, UriComponentsBuilder ucb){
         Book savedBook = bookRepository.save(newBook);
-        URI locationOfNewCustomer =ucb.path("/book/{id}")
-                .buildAndExpand(savedBook.getBookId())
+        URI locationOfNewCustomer = ucb.path("/gray/book/{id}")
+                .buildAndExpand(savedBook.getId())
                 .toUri();
 
         return ResponseEntity.created(locationOfNewCustomer).build();

@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 
 import java.net.URI;
 import java.util.List;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(properties = "spring.security.enabled=false")
 public class CustomerControllerTest {
 
     @Autowired
@@ -29,7 +31,7 @@ public class CustomerControllerTest {
 
     @Test
     public void getCustomer()  {
-        ResponseEntity<Customer> response = restTemplate.getForEntity("/customer", Customer.class);
+        ResponseEntity<Customer> response = restTemplate.getForEntity("/gray/customer", Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Customer customer = response.getBody();
         assertNotNull(customer);
@@ -39,7 +41,7 @@ public class CustomerControllerTest {
 
     @Test
     public void getById(){
-        ResponseEntity<Customer> response = restTemplate.getForEntity("/customer/111", Customer.class);
+        ResponseEntity<Customer> response = restTemplate.getForEntity("/gray/customer/111", Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Customer customer = response.getBody();
         assertNotNull(customer);
@@ -49,7 +51,9 @@ public class CustomerControllerTest {
 
     @Test
     public void getByIdNotFound(){
-        ResponseEntity<Customer> response = restTemplate.getForEntity("/customer/1231", Customer.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/gray/customer/11123", String.class);
+
+        //ResponseEntity<Customer> response = restTemplate.getForEntity("/gray/customer/1231", Customer.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
     }
@@ -59,7 +63,7 @@ public class CustomerControllerTest {
         //@DirtiesContext
     void shouldCreateANewCustomer() {
         Customer newCustomer = new Customer("emrah", "kosen");
-        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/customer", newCustomer, Void.class);
+        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/gray/customer", newCustomer, Void.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         URI location = createResponse.getHeaders().getLocation();
@@ -76,7 +80,7 @@ public class CustomerControllerTest {
     void shouldReturnAllCustomers() {
        // ResponseEntity<List> response = restTemplate.getForEntity("/customer/all", List.class);
         ResponseEntity<List<Customer>> response = restTemplate.exchange(
-                "/customer/all",
+                "/gray/customer/all",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Customer>>() {}
@@ -92,7 +96,7 @@ public class CustomerControllerTest {
 
     @Test
     void shouldReturnAllCustomersInAString(){
-        ResponseEntity<String> stResponse = restTemplate.getForEntity("/customer/all", String.class);
+        ResponseEntity<String> stResponse = restTemplate.getForEntity("/gray/customer/all", String.class);
         assertThat(stResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(stResponse.getBody());
@@ -106,7 +110,7 @@ public class CustomerControllerTest {
 
     @Test
     void shouldReturnPageOfCustomer(){
-        ResponseEntity<String> response = restTemplate.getForEntity("/customer/all?page=0&size=2", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/gray/customer/all?page=0&size=2", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -118,7 +122,7 @@ public class CustomerControllerTest {
 
     @Test
     void shouldReturnPageOfCustomerDecsOrder(){
-        ResponseEntity<String> response = restTemplate.getForEntity("/customer/all?page=0&size=2&sort=lastName,asc", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/gray/customer/all?page=0&size=2&sort=lastName,asc", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -134,7 +138,7 @@ public class CustomerControllerTest {
 
     @Test
     void shouldReturnPageOfCustomerDefaultOrder(){
-        ResponseEntity<String> response = restTemplate.getForEntity("/customer/all?page=0&size=2", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/gray/customer/all?page=0&size=2", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 

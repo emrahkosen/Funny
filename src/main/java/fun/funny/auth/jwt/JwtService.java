@@ -1,10 +1,12 @@
 package fun.funny.auth.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "EC5B79CB7DD678D3D569A8E2C52AA";
+    private static final SecretKey key = getSigninKey();
+    public static SecretKey getSigninKey() {
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256); // or HS384, HS512
+    }
+
+
+
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -52,7 +60,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
 //                .claim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60)) //for 1 hour
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60)) //for 1 hour 1000*60*60
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -62,21 +70,17 @@ public class JwtService {
 
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try{
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (ExpiredJwtException | SignatureException e){
+            throw new SignatureException("Not Walid Token");
+        }
     }
 
-//    private Key getSinginKey() {
-//        byte[] decoded = Decoders.BASE64.decode(SECRET_KEY);
-//
-//        return Keys.hmacShaKeyFor(decoded);
-//    }
 
-    public static SecretKey getSigninKey() {
-        return Keys.secretKeyFor(SignatureAlgorithm.HS256); // or HS384, HS512
-    }
-    private static final SecretKey key = getSigninKey();
+
 }
