@@ -5,6 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import fun.funny.entity.Customer;
 import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @TestPropertySource(properties = "spring.security.enabled=false")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CustomerControllerTest {
 
     @Autowired
