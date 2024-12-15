@@ -1,4 +1,4 @@
-package fun.funny.auth;
+package fun.funny.configuration;
 
 
 import fun.funny.auth.jwt.JwtAuthenticationFilter;
@@ -33,18 +33,15 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST_URL).permitAll()
-                                .requestMatchers(GRAY_LIST_URL).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(GRAY_LIST_URL).hasAnyRole("USER", "ADMIN")
                         .requestMatchers(BLACK_LIST_URL).hasAnyRole("ADMIN")
-//                        .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-//                        .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-//                        .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-//                        .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
-                        .anyRequest().authenticated()
+                       .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 ;
+
         return http.build();
     }
 

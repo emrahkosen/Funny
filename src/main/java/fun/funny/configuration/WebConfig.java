@@ -1,4 +1,4 @@
-package fun.funny.cors;
+package fun.funny.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;  
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {  
     @Override  
     public void addCorsMappings(CorsRegistry registry) {  
-        registry.addMapping("/api/auth/**") // Adjust to your paths  
+        registry.addMapping("/**") // Adjust to your paths
                 .allowedOrigins("http://localhost:3000") // Your frontend app URL  
                 .allowedMethods("GET", "POST", "PUT", "DELETE")  
                 .allowCredentials(true);  

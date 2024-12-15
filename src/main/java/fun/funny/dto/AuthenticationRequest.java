@@ -1,4 +1,4 @@
-package fun.funny.auth.data;
+package fun.funny.dto;
 
 public class AuthenticationRequest {
 

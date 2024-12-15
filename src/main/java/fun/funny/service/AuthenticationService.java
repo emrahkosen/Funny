@@ -1,8 +1,9 @@
-package fun.funny.auth;
+package fun.funny.service;
 
-import fun.funny.auth.data.AuthenticationRequest;
-import fun.funny.auth.data.AuthenticationResponse;
-import fun.funny.auth.data.RegisterRequest;
+import fun.funny.auth.UserDetailsImp;
+import fun.funny.dto.AuthenticationRequest;
+import fun.funny.dto.AuthenticationResponse;
+import fun.funny.dto.RegisterRequest;
 import fun.funny.auth.jwt.JwtService;
 import fun.funny.entity.User;
 import fun.funny.repository.UserRepository;

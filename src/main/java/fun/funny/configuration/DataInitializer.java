@@ -1,5 +1,6 @@
-package fun.funny.auth;
+package fun.funny.configuration;
 
+//import fun.funny.dto.UserDTO;
 //import fun.funny.entity.Role;
 //import fun.funny.entity.User;
 //import fun.funny.repository.RoleRepository;
@@ -22,8 +23,6 @@ package fun.funny.auth;
 //    @Autowired
 //    private UserService userService;
 //
-//    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Reuse instance
-//
 //    @PostConstruct
 //    public void init() {
 //        // Create and save roles
@@ -36,24 +35,15 @@ package fun.funny.auth;
 //        //roleRepository.save(basicUserRole);
 //
 //        // Fetch roles back from the database (to ensure they are managed)
-//        Role adminRole = roleRepository.findByName("ADMIN").get(); // Assuming you have this method
-//        Role basicUserRole = roleRepository.findByName("BASIC_USER").get(); // Assuming you have this method
+////        Role adminRole = roleRepository.findByName("ADMIN").get(); // Assuming you have this method
 //
 //        // Create and save users with roles
-//        User adminUser = new User();
-//        adminUser.setUsername("admin");
-//        adminUser.setPassword(passwordEncoder.encode("adminpass"));
+//        UserDTO userDTO = new UserDTO();
+//        userDTO.setUsername("ekosen");
+//        userDTO.setPassword("123");
 //        //adminUser.getRoles().add(adminRole);
-//        userService.saveUser(adminUser);
-//        userService.addUserRole(adminUser.getUserId(), adminRole.getId());
+//        userService.createUser(userDTO);
+////        userService.addUserRole(userDTO.getUserId(), adminRole.getId());
 //
-//
-//        User basicUser = new User();
-//        basicUser.setUsername("user");
-//        basicUser.setPassword(passwordEncoder.encode("userpass"));
-//        //basicUser.getRoles().add(basicUserRole);
-//        //userRepository.save(basicUser);
-//        userService.saveUser(basicUser);
-//        userService.addUserRole(basicUser.getUserId(), basicUserRole.getId());
 //    }
 //}

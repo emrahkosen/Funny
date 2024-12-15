@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController  
 @RequestMapping("/black/users")
-public class UserController {  
+public class UserController {
 
     private final UserService userService;  
 
@@ -86,6 +86,6 @@ public class UserController {
     @PostMapping("/{userId}/roles/{roleId}")  
     public ResponseEntity<Void> addUserRole(@PathVariable Long userId, @PathVariable Long roleId) {  
         userService.addUserRole(userId, roleId);  
-        return new ResponseEntity<>(HttpStatus.CREATED);  
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }  
 }

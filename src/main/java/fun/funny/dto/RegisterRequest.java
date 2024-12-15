@@ -1,4 +1,4 @@
-package fun.funny.auth.data;
+package fun.funny.dto;
 
 import fun.funny.entity.Role;
 

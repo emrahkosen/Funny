@@ -66,9 +66,6 @@ public class JwtService {
 
     }
 
-
-
-
     private Claims extractAllClaims(String token) {
         try{
             return Jwts.parserBuilder()
@@ -80,7 +77,5 @@ public class JwtService {
             throw new SignatureException("Not Walid Token");
         }
     }
-
-
 
 }

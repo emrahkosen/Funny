@@ -1,8 +1,9 @@
-package fun.funny.auth;
+package fun.funny.controller;
 
-import fun.funny.auth.data.AuthenticationRequest;
-import fun.funny.auth.data.AuthenticationResponse;
-import fun.funny.auth.data.RegisterRequest;
+import fun.funny.service.AuthenticationService;
+import fun.funny.dto.AuthenticationRequest;
+import fun.funny.dto.AuthenticationResponse;
+import fun.funny.dto.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
