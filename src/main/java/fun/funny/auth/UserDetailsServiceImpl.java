@@ -2,7 +2,6 @@ package fun.funny.auth;
 
 import fun.funny.entity.User;
 import fun.funny.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

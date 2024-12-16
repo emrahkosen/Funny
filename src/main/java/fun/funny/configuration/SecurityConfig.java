@@ -24,7 +24,7 @@ public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {"white/**",
             };
-    private static final String[] GRAY_LIST_URL = {"gray/**"};
+    private static final String[] GRAY_LIST_URL = {"gray/**", "black/users/isadmin"};
     private static final String[] BLACK_LIST_URL = {"black/**"};
 
     @Bean
